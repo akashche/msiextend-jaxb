@@ -1,0 +1,46 @@
+<jxb:bindings version="2.0"
+              xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <jxb:bindings schemaLocation="wix.xsd">
+        <jxb:schemaBindings>
+            <jxb:package name="com.redhat.openjdk.msiextend.jaxb"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+    <jxb:bindings schemaLocation="wix.xsd" node="/xsd:schema">
+        <jxb:bindings node="//xsd:element[@name='Control']">
+            <jxb:bindings node=".//xsd:element[@ref='Text']">
+                <jxb:property name="ControlText"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xsd:element[@name='Control']">
+            <jxb:bindings node=".//xsd:element[@ref='Property']">
+                <jxb:property name="ControlProperty"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xsd:element[@name='Category']">
+            <jxb:bindings node=".//xsd:attribute[@name='AppData']">
+                <jxb:property name="CategoryAppData"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xsd:element[@name='Publish']">
+            <jxb:bindings node=".//xsd:attribute[@name='Value']">
+                <jxb:property name="PublishValue"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xsd:element[@name='CustomAction']">
+            <jxb:bindings node=".//xsd:attribute[@name='Value']">
+                <jxb:property name="CustomActionValue"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xsd:element[@name='SetDirectory']">
+            <jxb:bindings node=".//xsd:attribute[@name='Value']">
+                <jxb:property name="SetDirectoryValue"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xsd:element[@name='SetProperty']">
+            <jxb:bindings node=".//xsd:attribute[@name='Value']">
+                <jxb:property name="SetPropertyValue"/>
+            </jxb:bindings>
+        </jxb:bindings>
+    </jxb:bindings>
+</jxb:bindings>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.redhat.openjdk</groupId>
+    <artifactId>msiextend-jaxb</artifactId>
+    <version>1.0</version>
+    <name>OpenJDK MSI Extension JAXB Classes</name>
+
+    <properties>
+        <!-- branding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- dependencies versions -->
+        <version.commons_lang>3.12.0</version.commons_lang>
+        <version.commons_io>2.11.0</version.commons_io>
+        <version.cxf>3.3.1</version.cxf>
+        <version.junit>5.8.2</version.junit>
+        <version.jaxb>2.3.1</version.jaxb>
+        <version.istack>4.0.1</version.istack>
+        <!-- plugins versions -->
+        <version.maven_compiler_plugin>3.10.0</version.maven_compiler_plugin>
+        <version.maven_source_plugin>3.2.1</version.maven_source_plugin>
+        <version.maven_surefire_plugin>2.22.2</version.maven_surefire_plugin>
+    </properties>
+
+    <dependencies>
+        <!-- JAXB -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${version.jaxb}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${version.jaxb}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.istack</groupId>
+            <artifactId>istack-commons-runtime</artifactId>
+            <version>${version.istack}</version>
+        </dependency>
+        <!-- common utilities -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version.commons_lang}</version>
+        </dependency>
+        <!-- test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${version.commons_io}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.maven_compiler_plugin}</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${version.maven_source_plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven_surefire_plugin}</version>
+            </plugin>
+            <plugin>
+                <!-- https://cxf.apache.org/cxf-xjc-plugin.html -->
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-xjc-plugin</artifactId>
+                <version>${version.cxf}</version>
+                <executions>
+                    <execution>
+                        <id>wix</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>xsdtojava</goal>
+                        </goals>
+                        <configuration>
+                            <xsdOptions>
+                                <xsdOption>
+                                    <extension>true</extension>
+                                    <xsd>${project.basedir}/src/main/resources/com/redhat/openjdk/msiextend/jaxb/wix.xsd</xsd>
+                                    <bindingFile>
+                                        ${project.basedir}/src/main/resources/com/redhat/openjdk/msiextend/jaxb/wix.xjb</bindingFile>
+                                    <extensionArgs>
+                                        <arg>-Xcommons-lang</arg>
+                                        <arg>-Xvalue-constructor</arg>
+                                        <arg>-Xdefault-value</arg>
+                                        <arg>-Xfluent-api</arg>
+                                        <arg>-no-header</arg>
+                                    </extensionArgs>
+                                </xsdOption>
+                            </xsdOptions>
+                            <extensions>
+                                <extension>org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.4</extension>
+                                <extension>org.jvnet.jaxb2_commons:jaxb2-value-constructor:3.0</extension>
+                                <extension>org.jvnet.jaxb2_commons:jaxb2-default-value:1.1</extension>
+                                <extension>org.jvnet.jaxb2_commons:jaxb2-fluent-api:3.0</extension>
+                            </extensions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
